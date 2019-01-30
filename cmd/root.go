@@ -18,6 +18,6 @@ var RootCmd = &cobra.Command{
 	Short: "verbose",
 	Long:  "Verbose input",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		return verbose.Encode(ampN)
+		return verbose.Encode(ampN, os.Stdin, os.Stdout)
 	},
 }
