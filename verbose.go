@@ -25,7 +25,7 @@ func Encode(ampN int, r io.Reader, w io.Writer) error {
 			bw.WriteByte(b)
 		}
 	}
-	return nil
+	return bw.Flush()
 }
 
 func Decode(ampN int, r io.Reader, w io.Writer) error {
