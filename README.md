@@ -1,5 +1,5 @@
 # verbose
-[![CircleCI](https://circleci.com/gh/nwtgck/verbose.svg?style=shield)](https://circleci.com/gh/nwtgck/verbose)
+[![CI](https://github.com/nwtgck/verbose/actions/workflows/ci.yml/badge.svg)](https://github.com/nwtgck/verbose/actions/workflows/ci.yml)
 
 Make your input verbose 🙈  
 The main purpose of `verbose` is flooding buffer!

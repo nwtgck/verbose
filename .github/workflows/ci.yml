@@ -1,0 +1,26 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  operational_test:
+    runs-on: ubuntu-18.04
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Go 1.x
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.16
+    - name: Operational test
+      run: |
+        set -eux
+        go build -o verbose main/main.go
+
+        # Check the equality in encode
+        [ $(printf abc | ./verbose) == aaaaaaaaaabbbbbbbbbbcccccccccc ]
+        # Check the equality in encode with option
+        [ $(printf abc | ./verbose -n 2) == aabbcc ]
+        # Check the equality in encode/decode
+        [ $(printf abc | ./verbose | ./verbose -d) == abc ]
+        # Check the equality in encode/decode with option
+        [ $(printf abc | ./verbose -n 100 | ./verbose -n 100 -d) == abc ]
