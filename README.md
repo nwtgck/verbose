@@ -1,8 +1,7 @@
 # verbose
 [![CI](https://github.com/nwtgck/verbose/actions/workflows/ci.yml/badge.svg)](https://github.com/nwtgck/verbose/actions/workflows/ci.yml)
 
-Make your input verbose 🙈  
-The main purpose of `verbose` is flooding buffer!
+CLI which makes your input verbose, flooding buffer
 
 ## Installation
 
@@ -24,9 +23,16 @@ printf "hello" | verbose -n 50
 # => hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhheeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeelllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllloooooooooooooooooooooooooooooooooooooooooooooooooo
 ```
 
-Decode verbose input
+Encode & decode.
 
 ```bash
 printf "hello" | verbose | verbose -d
+# => hello
+```
+
+Encode & decode specifying how much amplified.
+
+```bash
+printf "hello" | verbose -n 100 | verbose -n 100 -d
 # => hello
 ```
