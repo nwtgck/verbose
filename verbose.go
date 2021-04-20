@@ -1,17 +1,15 @@
 package verbose
 
 import (
-	"bufio"
 	"io"
+	"io/ioutil"
 )
 
 func Encode(ampN int, r io.Reader, w io.Writer) error {
-	// One byte slice
-	bs := make([]byte, 1)
-	bw := bufio.NewWriter(w)
+	var bs [1]byte
 	for {
 		// Read one byte
-		n, err := r.Read(bs)
+		n, err := r.Read(bs[:])
 		// Quit if EOF
 		if n == 0 {
 			break
@@ -20,21 +18,20 @@ func Encode(ampN int, r io.Reader, w io.Writer) error {
 			return err
 		}
 		// Write amplified bytes
-		b := bs[0]
 		for i := 0; i < ampN; i++ {
-			bw.WriteByte(b)
+			if _, err := w.Write(bs[:]); err != nil {
+				return err
+			}
 		}
 	}
-	return bw.Flush()
+	return nil
 }
 
 func Decode(ampN int, r io.Reader, w io.Writer) error {
-	// One byte slice
-	bs := make([]byte, 1)
-	br := bufio.NewReader(r)
+	var bs [1]byte
 	for {
 		// Read one byte
-		n, err := br.Read(bs)
+		n, err := r.Read(bs[:])
 		// Quit if EOF
 		if n == 0 {
 			break
@@ -43,9 +40,13 @@ func Decode(ampN int, r io.Reader, w io.Writer) error {
 			return err
 		}
 		// Write top byte
-		w.Write(bs)
+		if _, err := w.Write(bs[:]); err != nil {
+			return err
+		}
 		// Skip bytes
-		br.Discard(ampN - 1)
+		if _, err := io.CopyN(ioutil.Discard, r, int64(ampN-1)); err != nil {
+			return err
+		}
 	}
 	return nil
 }
