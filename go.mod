@@ -1,6 +1,6 @@
 module github.com/nwtgck/verbose
 
-require github.com/spf13/cobra v1.3.0
+require github.com/spf13/cobra v1.5.0
 
 require (
 	github.com/inconshreveable/mousetrap v1.0.0 // indirect
